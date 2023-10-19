@@ -3,6 +3,6 @@
     {"name": "Moses", "humanities": 2, "sciences": 4, "other people": -3,"pop culture": -5,"gaming":2,"sports":0, "mood": -2, "sanity": 10}
   ],
   "teachers": [
-    {"name": "Mr King", "subjects taught": ["computer science"],"defaultMood": 1, "attack": 3, "sanity": 10}
+    {"name": "Mr King", "subjects taught": ["computer science"],"mood": 1, "attack": 3, "sanity": 10}
   ]
 }
