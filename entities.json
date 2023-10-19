@@ -1,6 +1,6 @@
 {
   "students": [
-    {"name": "Moses", "humanities": 2, "sciences": 4, "other people": -3,"pop culture": -5,"gaming":2,"sports":0, "mood": -2, "sanity": 8}
+    {"name": "Moses", "subjects taken": ["mathematics","chemistry","computer science","physics"] "humanities": 2, "sciences": 4, "other people": -3,"pop culture": -5,"gaming":2,"sports":0, "mood": -2, "sanity": 8}
   ],
   "teachers": [
     {"name": "Mr King", "subjects taught": ["computer science"],"mood": 1, "attack": 3, "sanity": 9}
