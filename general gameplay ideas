@@ -1,0 +1,42 @@
+General gameplay
+
+Game will update every 3 seconds at none GUI level. This is what I refer to when I say “update” in this document.
+
+All students have 
+
+topics (all NPCs should start with a total of zero,  with a maximum of 5 and minimum of -5 in each topic, during first setup. Look at Moses’s data in the json as an example. All fluencies and enjoyments will be equal, however, throughout the game fluency and enjoyment will be separately tracked. A player’s enjoyment of everything will be fixed though the fluency will change, an NPC’s enjoyment will only change during conversation):
+Humanities
+Sciences
+other people
+pop culture
+gaming
+sports
+
+student interactions:
+ conversation system: You can only converse with fellow students. They will each have preferred conversation topics, like about people or about humanities. You will have a fluency in each topic, so having encountered 20 students will make you better at talking about people. An NPC’s mood will increase/decrease with a combination of these, along with moods taken into account. An NPC will refuse to have a conversation at low enough sanity/mood. Students will get tired of having the same conversations over and over again by having the topic you conversed go down after conversation. Students will also converse with each other. During a conversation the more sane person will lose 1 sanity and the less sane person will gain 2. If the player converses with an NPC of equal sanity, the player loses 1 sanity and the NPC gains 2. If two NPCs converse with equal sanity, it is decided at random who gains 2 sanity and who loses 1.
+
+teacher interactions:
+
+tasks:
+get paper/textbook/stapler/holepuncher/remote from room
+-random chance of needing this every period in which case they will look for a student to do this for them
+
+Task system:
+A teacher can give any student a task. A stopwatch immediately begins. If the student completes the task exactly within a certain number of updates, the teacher’s mood goes up. If it’s completed somewhat, the teacher’s mood remains the same. If it’s not completed, the teacher’s mood goes down and the student will be scolded. If it seems the student is not making progress quickly enough the timer will instantly elapse and the task will be incomplete. This could be: not getting where they need to go fast enough, not having the item in the inventory or not moving towards them with the item in the inventory. An incompleted task will reduce a teacher’s sanity, a completed task will increase it.
+
+Scolding system:
+If a teaacher decides they want to scold a student then they will move towards the student, no matter how far away they are. When they reach the student the student loses sanity and both the teacher’s and student’s moods towards each other decrease. Teachers will deal their “attack” to the student to determine how much sanity they lose.
+
+Day cycle:
+periods occur periodically. In early versions, you will be given a random room to go to for your next period along with a group of students and a teacher. You may sit through a lesson (in which case no gameplay happens) (there should be a fast forward to next period button) things like moving from your desk and having conversations with classmates will 
+
+Night cycle:
+There is the option to leave with everyone else and skip the night cycle. Teachers will chase you if you choose to stay and their mood towards you will be lowered, however, there is the opportunity to loot things from the school at this time without losing mood from most teachers (who won’t be there) and students
+
+Insane ones interactions:
+Touching any insane one will lower the toucher’s sanity. They’re movement is completely jittery and random, but they can decide to switch rooms.
+
+Endings:
+Caught the crazies ending - reach -10 sanity
+Popular kid ending - have enough students with a high enough mood towards you
+Teacher’s pet ending - have enough teachers with a high enough mood towards you
