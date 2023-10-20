@@ -1,25 +1,207 @@
 {
-    "collin sanders": {
-        "cs001": {
-            "type": "classroom", 
-            "width": 100, 
-            "height": 100, 
-            "floor": 0, 
-            "x": 100, 
-            "y": 100, 
-            "exits": {
-                "cs002": {
-                    "type": "door", 
-                    "open?": true, 
-                    "side": "top", 
-                    "displacement": 80
+    "locations": {
+        "collin sanders": {
+            "cs001": {
+                "class": "room", 
+                "type": "classroom => english", 
+                "widthx": 100, 
+                "widthy": 100, 
+                "floor": 0, 
+                "x": 100, 
+                "y": 100, 
+                "exits": ["E0001", "E0002"]
+            }, 
+            "cs003": {
+                "class": "room", 
+                "type": "classroom => english", 
+                "widthx": 150, 
+                "widthy": 100, 
+                "floor": 0, 
+                "x": 200, 
+                "y": 100, 
+                "exits": ["E0001", "E0003"]
+            }, 
+            "cs008": {
+                "class": "room", 
+                "type": "classroom => computer science",
+                "widthx": 300, 
+                "widthy": 100, 
+                "floor": 0, 
+                "x": 100, 
+                "y": 250, 
+                "exits": ["E0021"]
+            }, 
+            "cs006": {
+                "class": "room", 
+                "type": "office => maths",
+                "widthx": 50, 
+                "widthy": 100, 
+                "floor": 0, 
+                "x": 100, 
+                "y": 250, 
+                "exits": ["E0020"]
+            }, 
+            "hallway1": {
+                "class": "field", 
+                "type": "hallway",
+                "widthx": 350, 
+                "widthy": 50, 
+                "floor": 0, 
+                "x": 100, 
+                "y": 200, 
+                "exits": ["E0002", "E0003", "E0021", "E0020"]
+            }, 
+            "outdoors1": {
+                "class": "field", 
+                "type": "outdoor grounds",
+                "widthx": 100, 
+                "widthy": 50, 
+                "floor": 0, 
+                "x": 0, 
+                "y": 100, 
+                "exits": ["E0027"]
+            }
+        }    
+    }, 
+
+
+    "exits": {
+        "E0001": {
+            "type": "door", 
+            "status": "closed", 
+            "connects": {
+                "cs001": {
+                    "side": "west", 
+                    "displacement": 60
+                }, 
+                "cs003": {
+                    "side": "east", 
+                    "displacement": 60
+                }
+            }, 
+            "locking": {
+                "forward type": "key", 
+                "backward type": "hand", 
+                "towards": "cs001", 
+                "key id": "K0001"
+            }, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs003"
+            }
+        }, 
+        "E0002": {
+            "type": "door", 
+            "status": "open", 
+            "connects": {
+                "cs001": {
+                    "side": "south", 
+                    "displacement": 20
                 }, 
                 "hallway1": {
-                    "type": "door", 
-                    "open?": true, 
-                    "side": "left", 
+                    "side": "north", 
                     "displacement": 20
                 }
+            }, 
+            "locking": {
+                "forward type": "key", 
+                "backward type": "hand", 
+                "towards": "cs001", 
+                "key id": "K0002"
+            }, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs001"
+            }
+        }, 
+        "E0003": {
+            "type": "door", 
+            "status": "open", 
+            "connects": {
+                "cs003": {
+                    "side": "south", 
+                    "displacement": 20
+                }, 
+                "hallway1": {
+                    "side": "north", 
+                    "displacement": 120
+                }
+            }, 
+            "locking": {
+                "forward type": "key", 
+                "backward type": "hand", 
+                "towards": "cs003", 
+                "key id": "K0003"
+            }, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs003"
+            }
+        }, 
+        "E0020": {
+            "type": "door", 
+            "status": "locked", 
+            "connects": {
+                "cs006": {
+                    "side": "north", 
+                    "displacement": 0
+                }, 
+                "hallway1": {
+                    "side": "south", 
+                    "displacement": 300
+                }
+            }, 
+            "locking": {
+                "forward type": "key", 
+                "backward type": "hand", 
+                "towards": "cs006", 
+                "key id": "K0020"
+            }, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs006"
+            }
+        }, 
+        "E0021": {
+            "type": "door", 
+            "status": "closed", 
+            "connects": {
+                "cs008": {
+                    "side": "north", 
+                    "displacement": 120
+                }, 
+                "hallway1": {
+                    "side": "south", 
+                    "displacement": 120
+                }
+            }, 
+            "locking": null, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs008"
+            }
+        }, 
+        "E0027": {
+            "type": "door", 
+            "status": "closed", 
+            "connects": {
+                "outdoors1": {
+                    "side": "east", 
+                    "displacement": 110
+                }, 
+                "hallway1": {
+                    "side": "west", 
+                    "displacement": 10
+                }
+            }, 
+            "locking": {
+                "forward type": "pin", 
+                "backward type": null, 
+                "towards": "outdoors1"
+            }, 
+            "motion": {
+                "type": "swing", 
+                "towards": "cs008"
             }
         }
     }
