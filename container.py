@@ -1,10 +1,14 @@
 class Container():
 
-    def __init__(self):
+    def __init__(self,name):
 
         #Array containing item instances
         self.__inventory = []
+        self.__name = name
 
+    def getName(self):
+        return self.__name
+    
     def seeInventory(self):
         pass
         # GUI logic for seeing inventory here, pass is a placeholder
