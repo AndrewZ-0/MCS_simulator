@@ -1,0 +1,26 @@
+{
+    "collin sanders": {
+        "cs001": {
+            "type": "classroom", 
+            "width": 100, 
+            "height": 100, 
+            "floor": 0, 
+            "x": 100, 
+            "y": 100, 
+            "exits": {
+                "cs002": {
+                    "type": "door", 
+                    "open?": true, 
+                    "side": "top", 
+                    "displacement": 80
+                }, 
+                "hallway1": {
+                    "type": "door", 
+                    "open?": true, 
+                    "side": "left", 
+                    "displacement": 20
+                }
+            }
+        }
+    }
+}
