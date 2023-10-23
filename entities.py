@@ -13,10 +13,10 @@ class Entity():
     def getName(self):
         return self._name
 
-    def getxposition(self):
+    def getVirtualx(self):
         return self._virtualx
 
-    def getyposition(self):
+    def getVirtualy(self):
         return self._virtualy
 
     def getLocation(self):
@@ -29,10 +29,24 @@ class Wall(Entity):
 class Interactable(Entity):
     def __init__(self,name,virtualx,virtualy,location):
         super().__init__(name,virtualx,virtualy,location)
+        self._actions = [] # each action is a tuple, the first element being a string (the description of the action), the second element being a tuple of functions to be performed, the third element a tuple of tuples, each of which are the parameters for the function. i.e ("action description",(print,action),(("action is performed",),(parameter1,parameter2,parameter3)))
         # GUI logic for instantiating nametag here since all interactables have name tags
 
     def getActions(self):
-        pass
+        return self._actions
+
+    def addAction(self,action):
+        self._actions.append(action)
+
+    def removeAction(self,action):
+        self._actions.remove(action)
+
+    def anyActions(self):
+        if self._actions:
+            return True
+
+    def clearActions(self):
+        self._actions = []
 
 class Door(Interactable):
     def __init__(self,name,virtualx,virtualy,location, open, connects, motion):
