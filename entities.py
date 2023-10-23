@@ -126,6 +126,11 @@ class Student(Human):
         self.__gaming = self.__gamingFluency = gaming
         self.__sports = self.__sportsFluency = sports
 
+class Player(Student):
+    def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
+        super().__init__(name, virtualx, virtualy, location, buffs, sanity, subjects, mood,humanities,sciences,otherPeople,popCulture,gaming,sports)
+        self.__stamina = 500
+
 class Teacher(Human):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,attack):
         super().__init__(name,virtualx,virtualy,location,buffs,sanity,subjects,mood)
