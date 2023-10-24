@@ -1,5 +1,9 @@
 import container
 import random
+import json
+
+settings = json.load(open("settings.json","r"))
+lines = json.load(open("lines.json","r"))
 
 #these are things that move around the rooms, like the player
 class Entity():
@@ -22,10 +26,13 @@ class Entity():
     def getLocation(self):
         return self._location
 
+    def getType(self):
+        return self._type
+
 class Wall(Entity):
     def __init__(self,name,virtualx,virtualy,location):
         super().__init__(name,virtualx,virtualy,location)
-        self.__type = 0
+        self._type = "wall"
 
 class Interactable(Entity):
     def __init__(self,name,virtualx,virtualy,location):
@@ -56,7 +63,7 @@ class Door(Interactable):
         self.__connects = connects
         self.__motion = motion
 
-        self.__type = 1
+        self._type = "door"
 
     def isOpen(self):
         return self.__open
@@ -88,7 +95,7 @@ class Furniture(GivesBuffs):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
 
-        self.__type = 2
+        self._type = "furniture"
 class Dynamic(GivesBuffs):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
@@ -98,6 +105,9 @@ class Dynamic(GivesBuffs):
     def getMoved(self):
         return self.__moved
 
+    def saveLocation(self):
+        self.__moved = False
+
     def randomisexposition(self,min,max):
         self._virtualx = random.randint(min,max)
 
@@ -106,12 +116,13 @@ class Dynamic(GivesBuffs):
 
     def changeLocation(self,newlocation):
         self._location = newlocation
+        self.__moved = True
 
 class Item(Dynamic):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
 
-        self.__type = 3
+        self._type = "item"
 
 class Consumable(Item):
     def __init__(self,name,virtualx,virtualy,location,buffs):
@@ -135,19 +146,68 @@ class Human(Dynamic):
         self._moods = {} # formatted as {entity(instance):mood(integer),entity:mood etc
 
     def meet(self,entity):
-        self._moods[entity] = self.__defaultMood + random.randint(-2,2)
+        self._moods[entity] = self.__defaultMood + random.randint(-settings["maximum displacement for default mood"],settings["maximum displacement for default mood"])
+
+    def met(self,entity):
+        if entity in self._moods.keys():
+            return True
+        else:
+            return False
+
+    def getMood(self,entity):
+        return self._moods[entity]
+
+    def speak(self,speach):
+        if self._location.loaded():
+            speach = random.choice(lines[speach])
+            # GUI code for creating speach bubble
 
 class Student(Human):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
         super().__init__(name,virtualx,virtualy,location,buffs,sanity,subjects,mood)
         self.__humanitiesEnjoyment = self.__humanitiesFluency = humanities
-        self.__sciences = self.__sciencesFluency = sciences
-        self.__otherPeople = otherPeople
-        self.__popCulture = popCulture
-        self.__gaming = self.__gamingFluency = gaming
-        self.__sports = self.__sportsFluency = sports
+        self.__sciencesEnjoyment = self.__sciencesFluency = sciences
+        self.__otherPeopleEnjoyment = otherPeople
+        self.__popCultureEnjoyment = self.__popCultureFluency = popCulture
+        self.__gamingEnjoyment = self.__gamingFluency = gaming
+        self.__sportsEnjoyment = self.__sportsFluency = sports
 
-        self.__type = 4
+        self.__enjoyment = {"humanities":humanities,"sciences":sciences,"otherPeople":otherPeople,"popCulture":popCulture,"gaming":gaming,"sports":sports}
+        self.__fluency = self.__enjoyment.copy()
+        del self.__fluency["otherPeople"] # the other people fluency will be the sum of all the moods the player has to other people, so is not stored in the dictionary
+
+        self._type = "student"
+
+    def getFluency(self,topic):
+        if topic == "otherPeople":
+            return sum(self._moods.values())
+        else:
+            return self.__fluency[topic]
+
+    def getEnjoyment(self,topic):
+        return self.__enjoyment[topic]
+
+    def converse(self,student,topic):
+
+        if not self.met(student):
+            self.meet(student)
+
+        if self.getMood(student) < settings["minimum mood to converse"]:
+            self.speak("refuse to converse")
+            return False
+        else:
+            approval = settings["fluency proportion"]*student.getFluency(topic) + (1-settings["fluency proportion"])*self.getEnjoyment(topic)
+            if approval >= settings["approval displacement for positive/negative reaction"]:
+                self.speak(lines["converse approve"])
+            elif approval <= -settings["approval displacement for positive/negative reaction"]:
+                self.speak(lines["converse disapprove"])
+            else:
+                self.speak(lines["converse neutral"])
+
+            self._moods[student] += approval
+            self.__enjoyment[topic] -= settings["conversation fatigue"] + settings["conversation fatigue"]/5
+            for enjoyment in self.__enjoyment.values():
+                enjoyment += settings["conversation fatigue"]/5
 
 class Player(Student):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
@@ -159,4 +219,4 @@ class Teacher(Human):
         super().__init__(name,virtualx,virtualy,location,buffs,sanity,subjects,mood)
         self.__attack = attack
 
-        self.__type = 5
+        self._type = "teacher"
