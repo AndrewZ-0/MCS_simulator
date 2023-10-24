@@ -1,0 +1,7 @@
+{
+  "maximum displacement for default mood":2,
+  "minimum mood to converse":-5,
+  "fluency proportion":0.25,
+  "approval displacement for positive/negative reaction":1,
+  "conversation fatigue":1
+}
