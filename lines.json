@@ -1,0 +1,6 @@
+{
+  "refuse to converse":["I don't want to talk to you","No way I'm talking to you","I'm not talking to you","Leave me alone"],
+  "converse approve":["I never thought about it like that before","That's so cool","Oh my god that makes so much sense","I 100% agree","Finally somebody gets it"],
+  "converse neutral":["OK","sure","I guess that makes sense"],
+  "converse disapprove":["I'm not really following","That doesn't make any sense","nah, I disagree","that's a dumb opinion","This conversation is such a waste of time"]
+}
