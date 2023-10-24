@@ -25,6 +25,7 @@ class Entity():
 class Wall(Entity):
     def __init__(self,name,virtualx,virtualy,location):
         super().__init__(name,virtualx,virtualy,location)
+        self.__type = 0
 
 class Interactable(Entity):
     def __init__(self,name,virtualx,virtualy,location):
@@ -55,6 +56,8 @@ class Door(Interactable):
         self.__connects = connects
         self.__motion = motion
 
+        self.__type = 1
+
     def isOpen(self):
         return self.__open
 
@@ -84,6 +87,8 @@ class GivesBuffs(Interactable):
 class Furniture(GivesBuffs):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
+
+        self.__type = 2
 class Dynamic(GivesBuffs):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
@@ -105,6 +110,8 @@ class Dynamic(GivesBuffs):
 class Item(Dynamic):
     def __init__(self,name,virtualx,virtualy,location,buffs):
         super().__init__(name,virtualx,virtualy,location,buffs)
+
+        self.__type = 3
 
 class Consumable(Item):
     def __init__(self,name,virtualx,virtualy,location,buffs):
@@ -140,6 +147,8 @@ class Student(Human):
         self.__gaming = self.__gamingFluency = gaming
         self.__sports = self.__sportsFluency = sports
 
+        self.__type = 4
+
 class Player(Student):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
         super().__init__(name, virtualx, virtualy, location, buffs, sanity, subjects, mood,humanities,sciences,otherPeople,popCulture,gaming,sports)
@@ -149,3 +158,5 @@ class Teacher(Human):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,attack):
         super().__init__(name,virtualx,virtualy,location,buffs,sanity,subjects,mood)
         self.__attack = attack
+
+        self.__type = 5
