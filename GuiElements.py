@@ -79,8 +79,7 @@ class SanityBar(dataBar):
         sanity = 100
         self.regenTicker = 0
 
-        #(0, 176, 24)
-        super().__init__(screen, sanity, sanity, (0, 200, 0), x, y)
+        super().__init__(screen, sanity, sanity, (0, 200, 24), x, y)
 
     def update(self, valueChange):
         newValue = round(self.value + valueChange, 1)
@@ -90,29 +89,19 @@ class SanityBar(dataBar):
         elif valueChange > 0:
             direction = -1
 
-        if newValue <= 0: #0%
+        if newValue <= 0:
             self.value = 0
             print("gameEnd")
-        elif newValue <= 5: #5%
-            #0-5
+        elif newValue <= 5:
             self.set_colours(255, 0, 0)
-            #self.update_colours(-2 * direction, -1 * direction, 0)
-        elif newValue <= 10: #valueRatio >= 8: #12.5%
-            #5-10
-            #self.update_colours(0, -10 * direction, -6 * direction)
-            j = ((10 - 5) / 0.2)
+        elif newValue <= 12.4:
+            j = ((12.4 - 5) / 0.2)
             self.update_colours(0, direction * ((0 - 127) / j), direction * ((0 - 66) / j))
-            #(255, 17, 0)
-        elif newValue <= 25: #self.maxvalue / newValue >= 4: #25%
-            #10-25
-            #self.update_colours(10 * direction, -1 * direction, -1 * direction)
-            j = ((25 - 10) / 0.2)
+        elif newValue <= 25:
+            j = ((25 - 12.4) / 0.2)
             self.update_colours(direction * (255 / j), direction * ((127 - 200) / j), direction * ((66 - 24) / j))
-            #(255, 127, 66)
         else:
-            #25-100
-            #(0, 176, 24)
-            self.set_colours(0, 200, 0)
+            self.set_colours(0, 200, 24)
         print(self.colour, newValue)
         
         self.regenTicker = 0
