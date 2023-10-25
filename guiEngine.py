@@ -188,7 +188,7 @@ class GameEngine:
             if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
                 self.sanityBar.regenTicker += 1
             else:
-                self.sanityBar.update(0.2)
+                self.sanityBar.update(1)
 
     def update_inventory(self, item):
         self.inventory.append(item)
