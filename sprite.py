@@ -26,6 +26,7 @@ class Sprite(pygame.sprite.Sprite):
         pygame.draw.rect(self.screen, self.colour, self.rect)
 
     def despawn(self):
+        self.kill()
         del self.rect
     
     def moveto(self, x, y):
@@ -40,18 +41,24 @@ class Player(Sprite):
 
         self.speed = 3
 
-    def handle_input(self, keys, stamina, fatigued):
+    def handle_input(self, keys, fatigued):
         if keys[K_SPACE] and not fatigued:
             self.speed = 8
         else:
             self.speed = 3
+        
+        self.moved = False
 
         if keys[K_LEFT]:
             self.rect.x -= self.speed
+            self.moved = True
         if keys[K_RIGHT]:
             self.rect.x += self.speed
+            self.moved = True
         if keys[K_UP]:
             self.rect.y -= self.speed
+            self.moved = True
         if keys[K_DOWN]:
             self.rect.y += self.speed
+            self.moved = True
 #======================================================================================

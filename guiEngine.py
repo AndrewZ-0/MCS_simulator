@@ -23,6 +23,9 @@ class GameEngine:
         self.stamina = 100
         self.inventory = []
 
+        self.damage_dealing = 0
+        self.damage_dealing_tickLimit = 10
+
         #[Temp json handling elements] =======================================
         with open("settings.json", "r") as f:
             settingsDict = load(f)
@@ -34,39 +37,84 @@ class GameEngine:
         #[Temp virtual elements] =============================================
         self.enitities = {
             "obj1": {
-                "colour": (255, 255, 0), 
-                "x": 10, 
-                "y": 100, 
+                "colour": (0, 255, 0), 
+                "x": 30, 
+                "y": 10, 
                 "width": 30, 
-                "height": 30
+                "height": 30, 
+                "damage": 5
             }, 
             "obj2": {
                 "colour": (0, 255, 0), 
-                "x": 100, 
-                "y": 10, 
+                "x": 550, 
+                "y": 250, 
                 "width": 30, 
-                "height": 30
+                "height": 30, 
+                "damage": 5
             },
             "obj3": {
-                "colour": (0, 255, 255), 
-                "x": 100, 
-                "y": 500, 
+                "colour": (255, 255, 0), 
+                "x": 80, 
+                "y": 10, 
                 "width": 30, 
-                "height": 30
+                "height": 30, 
+                "damage": 10
             },
             "obj4": {
-                "colour": (0, 0, 255), 
-                "x": 100, 
-                "y": 1000, 
+                "colour": (255, 255, 0), 
+                "x": 250, 
+                "y": 600, 
                 "width": 30, 
-                "height": 30
+                "height": 30, 
+                "damage": 10
             }, 
             "obj5": {
-                "colour": (255, 0, 255), 
-                "x": 500, 
-                "y": 800, 
+                "colour": (255, 165, 0), 
+                "x": 130, 
+                "y": 10, 
                 "width": 30, 
-                "height": 30
+                "height": 30, 
+                "damage": 20
+            }, 
+            "obj6": {
+                "colour": (200, 165, 0), 
+                "x": 180, 
+                "y": 10, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 30
+            }, 
+            "obj7": {
+                "colour": (150, 80, 0), 
+                "x": 230, 
+                "y": 10, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 40
+            }, 
+            "obj8": {
+                "colour": (120, 0, 0), 
+                "x": 280, 
+                "y": 10, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 50
+            }, 
+            "obj9": {
+                "colour": (0, 0, 0), 
+                "x": 330, 
+                "y": 10, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 80
+            }, 
+            "obj10": {
+                "colour": (0, 0, 0), 
+                "x": 300, 
+                "y": 1000, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 80
             }
         }
         self.mappedEntities = []
@@ -103,16 +151,38 @@ class GameEngine:
         return not inScreenFlag
 
     def update_stamina(self):
-        if self.player.speed == 8:
+        if self.player.speed == 8 and self.player.moved:
             self.staminaBar.update(-0.5)
         elif self.staminaBar.value < self.staminaBar.maxvalue:
             self.staminaBar.update(0.1)
         
     def update_sanity(self):
+        if self.damage_dealing_tickLimit == 0:
+            self.damage_dealing_tickLimit = 10
+
+        if self.damage_dealing_tickLimit < 10 and self.sanityBar.value > 0:
+            valueChange = (self.damage_dealing / self.damage_dealing_tickLimit)
+            self.damage_dealing -= valueChange
+
+            self.sanityBar.update(-valueChange)
+
+            self.damage_dealing_tickLimit -= 1
+
         for entity in self.gamecamera.sprites():
             if entity.entityKey != "player" and self.player.rect.colliderect(entity.rect):
+                entity.despawn()
+
                 if self.sanityBar.value > 0:
-                    self.sanityBar.update(-0.2)
+                    #========================
+                    self.damage_dealing += self.enitities[entity.entityKey]["damage"]
+                    #========================
+
+                    valueChange = (self.damage_dealing / self.damage_dealing_tickLimit)
+                    self.damage_dealing -= valueChange
+
+                    self.sanityBar.update(-valueChange)
+
+                    self.damage_dealing_tickLimit -= 1
         
         if self.sanityBar.value < self.sanityBar.maxvalue:
             if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
@@ -149,13 +219,13 @@ class GameEngine:
             
 
             keys = pygame.key.get_pressed()
-            self.player.handle_input(keys, self.staminaBar.value, self.staminaBar.fatigued)
+            self.player.handle_input(keys, self.staminaBar.fatigued)
 
             self.gamecamera.correct_offsets(self.abs_origin_vect, self.player)
 
             for sprite in self.gamecamera.sprites():
                 if sprite.entityKey != "player" and not self.isin_screen(sprite.abs_x, sprite.abs_y, sprite.rect.width, sprite.rect.height):
-                    sprite.kill()
+                    sprite.despawn()
                     self.mappedEntities.remove(sprite.entityKey)
 
             #[Temp virtual handling code] ==============================================

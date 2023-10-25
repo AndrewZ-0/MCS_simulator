@@ -82,15 +82,17 @@ class SanityBar(dataBar):
         super().__init__(screen, sanity, sanity, (0, 200, 24), x, y)
 
     def update(self, valueChange):
-        newValue = round(self.value + valueChange, 1)
-
         if valueChange < 0:
             direction = 1
         elif valueChange > 0:
             direction = -1
 
+        newValue = self.value + valueChange
+
+        endFlag = False
         if newValue <= 0:
             self.value = 0
+            endFlag = True
             print("gameEnd")
         elif newValue <= 5:
             self.set_colours(255, 0, 0)
@@ -102,15 +104,15 @@ class SanityBar(dataBar):
             self.update_colours(direction * (255 / j), direction * ((127 - 200) / j), direction * ((66 - 24) / j))
         else:
             self.set_colours(0, 200, 24)
-        print(self.colour, newValue)
         
         self.regenTicker = 0
-        super().update(valueChange)
-
-        if int(self.value) == 0:
-            self.set_warningBorder(True)
-        else:
+        if not endFlag:
+            super().update(valueChange)
             self.set_warningBorder(False)
+        else:
+            super().update(0)
+            self.set_warningBorder(True)
+
 
 class StaminaBar(dataBar):
     def __init__(self, screen, x, y):
