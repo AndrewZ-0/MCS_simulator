@@ -145,6 +145,12 @@ class Human(Dynamic):
         self._inventory = []
         self._moods = {} # formatted as {entity(instance):mood(integer),entity:mood etc
 
+    def gainSanity(self,sanity):
+        self._sanity += sanity
+
+    def loseSanity(self,sanity):
+        self._sanity -= sanity
+
     def meet(self,entity):
         self._moods[entity] = self.__defaultMood + random.randint(-settings["maximum displacement for default mood"],settings["maximum displacement for default mood"])
 
@@ -208,6 +214,9 @@ class Student(Human):
             self.__enjoyment[topic] -= settings["conversation fatigue"] + settings["conversation fatigue"]/5
             for enjoyment in self.__enjoyment.values():
                 enjoyment += settings["conversation fatigue"]/5
+
+            self.gainSanity(approval)
+            student.gainSanity(approval)
 
 class Player(Student):
     def __init__(self,name,virtualx,virtualy,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
