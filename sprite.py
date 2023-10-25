@@ -40,8 +40,8 @@ class Player(Sprite):
 
         self.speed = 3
 
-    def handle_input(self, keys, stamina):
-        if keys[K_SPACE] and int(stamina) != 0:
+    def handle_input(self, keys, stamina, fatigued):
+        if keys[K_SPACE] and not fatigued:
             self.speed = 8
         else:
             self.speed = 3

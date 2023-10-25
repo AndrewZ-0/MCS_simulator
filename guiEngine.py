@@ -3,6 +3,7 @@ from pygame.locals import *
 from sprite import Sprite, Player
 from GuiElements import SanityBar, StaminaBar
 from camera import Camera
+from json import load
 
 class GameEngine:
     def __init__(self):
@@ -21,6 +22,13 @@ class GameEngine:
         self.sanity = 100
         self.stamina = 100
         self.inventory = []
+
+        #[Temp json handling elements] =======================================
+        with open("settings.json", "r") as f:
+            settingsDict = load(f)
+        
+        self.settingsLibrary = settingsDict["gui"]
+        #=====================================================================
 
 
         #[Temp virtual elements] =============================================
@@ -62,7 +70,7 @@ class GameEngine:
             }
         }
         self.mappedEntities = []
-        #======================================================================
+        #=====================================================================
 
     def create_sprite(self, entityKey, colour, x, y, width, height):
         self.mappedEntities.append(entityKey)
@@ -105,6 +113,12 @@ class GameEngine:
             if entity.entityKey != "player" and self.player.rect.colliderect(entity.rect):
                 if self.sanityBar.value > 0:
                     self.sanityBar.update(self.sanityBar.value - 0.2)
+        
+        if self.sanityBar.value < self.sanityBar.maxvalue:
+            if self.sanityBar.regenTicker < self.settingsLibrary["tickers"]["stamina"]:
+                self.sanityBar.regenTicker += 1
+            else:
+                self.sanityBar.update(self.sanityBar.value + 1)
 
     def update_inventory(self, item):
         self.inventory.append(item)
@@ -135,7 +149,7 @@ class GameEngine:
             
 
             keys = pygame.key.get_pressed()
-            self.player.handle_input(keys, self.staminaBar.value)
+            self.player.handle_input(keys, self.staminaBar.value, self.staminaBar.fatigued)
 
             self.gamecamera.correct_offsets(self.abs_origin_vect, self.player)
 

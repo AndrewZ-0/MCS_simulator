@@ -44,6 +44,14 @@ class dataBar:
         blue = self.update_colour(self.colour[2], blueChange)
 
         self.colour = (red, green, blue)
+    
+    def set_warningBorder(self, warningFlag):
+        if warningFlag:
+            self.outlineWidth = 2
+            self.outlineColour = (255, 0, 0)
+        else:
+            self.outlineWidth = 1
+            self.outlineColour = (100, 100, 100)
 
     def update(self, newValue):
         self.value = newValue
@@ -54,13 +62,6 @@ class dataBar:
 
         self.dataText = self.data_font.render(dataText_text, True, (255, 255, 255))
         self.text_rect = self.dataText.get_rect(center = (self.x + self.width // 2, self.y + self.height // 2))
-
-        if int(self.value) == 0:
-            self.outlineWidth = 2
-            self.outlineColour = (255, 0, 0)
-        else:
-            self.outlineWidth = 1
-            self.outlineColour = (100, 100, 100)
 
     def draw(self):
         pygame.draw.rect(self.screen, (150, 150, 150), self.barContainerBg)
@@ -73,11 +74,13 @@ class dataBar:
 class SanityBar(dataBar):
     def __init__(self, screen, x, y):
         sanity = 100
+        self.regenTicker = 0
 
         super().__init__(screen, sanity, sanity, (0, 176, 24), x, y)
 
     def update(self, newValue):
         if newValue <= 0: #0%
+            self.value = 0
             print("gameEnd")
         elif int(newValue) <= 10: #5%
             #self.update_colour(153, 0, 0)
@@ -91,10 +94,27 @@ class SanityBar(dataBar):
         #else:
             #self.update_colour(0, 176, 24)
         
+        self.regenTicker = 0
         super().update(newValue)
+
+        if int(self.value) == 0:
+            self.set_warningBorder(True)
+        else:
+            self.set_warningBorder(False)
 
 class StaminaBar(dataBar):
     def __init__(self, screen, x, y):
         stamina = 100
+        self.fatigued = False
 
         super().__init__(screen, stamina, stamina, (5, 213, 250), x, y)
+    
+    def update(self, newValue):
+        super().update(newValue)
+
+        if self.fatigued and self.value > 10:
+            self.fatigued = False
+            self.set_warningBorder(False)
+        elif int(self.value) == 0:
+            self.fatigued = True
+            self.set_warningBorder(True)
