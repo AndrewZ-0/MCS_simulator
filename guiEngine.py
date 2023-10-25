@@ -104,21 +104,21 @@ class GameEngine:
 
     def update_stamina(self):
         if self.player.speed == 8:
-            self.staminaBar.update(self.staminaBar.value - 0.5)
+            self.staminaBar.update(-0.5)
         elif self.staminaBar.value < self.staminaBar.maxvalue:
-            self.staminaBar.update(self.staminaBar.value + 0.1)
+            self.staminaBar.update(0.1)
         
     def update_sanity(self):
         for entity in self.gamecamera.sprites():
             if entity.entityKey != "player" and self.player.rect.colliderect(entity.rect):
                 if self.sanityBar.value > 0:
-                    self.sanityBar.update(self.sanityBar.value - 0.2)
+                    self.sanityBar.update(-0.2)
         
         if self.sanityBar.value < self.sanityBar.maxvalue:
             if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
                 self.sanityBar.regenTicker += 1
             else:
-                self.sanityBar.update(self.sanityBar.value + 1)
+                self.sanityBar.update(0.2)
 
     def update_inventory(self, item):
         self.inventory.append(item)
