@@ -115,7 +115,7 @@ class GameEngine:
                     self.sanityBar.update(self.sanityBar.value - 0.2)
         
         if self.sanityBar.value < self.sanityBar.maxvalue:
-            if self.sanityBar.regenTicker < self.settingsLibrary["tickers"]["stamina"]:
+            if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
                 self.sanityBar.regenTicker += 1
             else:
                 self.sanityBar.update(self.sanityBar.value + 1)
