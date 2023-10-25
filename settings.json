@@ -1,7 +1,14 @@
 {
-  "maximum displacement for default mood":2,
-  "minimum mood to converse":-5,
-  "fluency proportion":0.25,
-  "approval displacement for positive/negative reaction":1,
-  "conversation fatigue":1
+    "virtual system": {
+        "default mood max disp": 2,
+        "min conversing mood": -5,
+        "fluency proportion": 0.25,
+        "approval pos/neg reaction disp": 1,
+        "conversation fatigue": 1
+    }, 
+    "gui": {
+        "ticker": {
+            "stamina": 1000
+        }
+    }
 }
