@@ -152,9 +152,14 @@ class GameEngine:
 
     def update_stamina(self):
         if self.player.speed == 8 and self.player.moved:
+            self.staminaBar.regenTicker = 0
             self.staminaBar.update(-0.5)
         elif self.staminaBar.value < self.staminaBar.maxvalue:
-            self.staminaBar.update(0.1)
+            if self.staminaBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
+                self.staminaBar.regenTicker += 1
+            else:
+                self.staminaBar.update(0.2)
+                self.staminaBar.regenTicker = 0
         
     def update_sanity(self):
         if self.damage_dealing_tickLimit == 0:
@@ -185,7 +190,7 @@ class GameEngine:
                     self.damage_dealing_tickLimit -= 1
         
         if self.sanityBar.value < self.sanityBar.maxvalue:
-            if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["stamina"]:
+            if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["sanity"]:
                 self.sanityBar.regenTicker += 1
             else:
                 self.sanityBar.update(1)

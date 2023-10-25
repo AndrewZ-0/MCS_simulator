@@ -118,6 +118,7 @@ class StaminaBar(dataBar):
     def __init__(self, screen, x, y):
         stamina = 100
         self.fatigued = False
+        self.regenTicker = 0
 
         super().__init__(screen, stamina, stamina, (5, 213, 250), x, y)
     
