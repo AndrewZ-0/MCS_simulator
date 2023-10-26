@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-
+from random import choices, randint
 
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, screen, colour, width, height, entityKey):
@@ -40,25 +40,51 @@ class Player(Sprite):
         super().__init__(screen, colour, width, height, "player")
 
         self.speed = 3
+        self.jittering = [1, 0]
+    
+    def moveLeft(self):
+        self.rect.x -= self.speed
+        self.moved = True
 
-    def handle_input(self, keys, fatigued):
-        if keys[K_SPACE] and not fatigued:
-            self.speed = 8
-        else:
-            self.speed = 3
-        
+    def moveRight(self):
+        self.rect.x += self.speed
+        self.moved = True
+    
+    def moveUp(self):
+        self.rect.y -= self.speed
+        self.moved = True
+    
+    def moveDown(self):
+        self.rect.y += self.speed
+        self.moved = True
+
+    def handle_movement(self, keys, fatigued):
         self.moved = False
 
-        if keys[K_LEFT]:
-            self.rect.x -= self.speed
-            self.moved = True
-        if keys[K_RIGHT]:
-            self.rect.x += self.speed
-            self.moved = True
-        if keys[K_UP]:
-            self.rect.y -= self.speed
-            self.moved = True
-        if keys[K_DOWN]:
-            self.rect.y += self.speed
-            self.moved = True
+        if choices((True, False), self.jittering, k = 1)[0]:
+            if keys[K_SPACE] and not fatigued:
+                self.speed = 8
+            else:
+                self.speed = 3
+
+
+            if keys[K_LEFT]:
+                self.moveLeft()
+            if keys[K_RIGHT]:
+                self.moveRight()
+            if keys[K_UP]:
+                self.moveUp()
+            if keys[K_DOWN]:
+                self.moveDown()
+        else:
+            randMovementChoice = randint(0, 4)
+
+            if randMovementChoice == 1:
+                self.moveLeft()
+            if randMovementChoice == 2:
+                self.moveRight()
+            if randMovementChoice == 3:
+                self.moveUp()
+            if randMovementChoice == 4:
+                self.moveDown()
 #======================================================================================

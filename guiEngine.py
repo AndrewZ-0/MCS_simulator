@@ -213,8 +213,38 @@ class GameEngine:
             self.sanityBar.update(-0.2)
 
         self.damage_dealing_tickLimit -= 1
+    
+    def update_jittering(self):
+        sanityValue = int(self.sanityBar.value)
+
+        if sanityValue <= 5:
+            self.player.jittering = [1, 10]
+        elif sanityValue <= 10:
+            self.player.jittering = [1, 8]
+        elif sanityValue <= 15:
+            self.player.jittering = [1, 5]
+        elif sanityValue <= 20:
+            self.player.jittering = [1, 3]
+        elif sanityValue <= 25:
+            self.player.jittering = [1, 2]
+        elif sanityValue <= 30:
+            self.player.jittering = [1, 1]
+        elif sanityValue <= 35:
+            self.player.jittering = [3, 1]
+        elif sanityValue <= 40:
+            self.player.jittering = [6, 1]
+        elif sanityValue <= 50:
+            self.player.jittering = [10, 1]
+        elif sanityValue <= 75:
+            self.player.jittering = [20, 1]
+        elif sanityValue <= 90:
+            self.player.jittering = [30, 1]
+        else:
+            self.player.jittering = [1, 0]
         
     def update_sanity(self):
+        self.update_jittering()
+
         if self.damage_dealing_tickLimit == 0:
             self.damage_dealing_tickLimit = 10
 
@@ -267,7 +297,7 @@ class GameEngine:
             
 
             keys = pygame.key.get_pressed()
-            self.player.handle_input(keys, self.staminaBar.fatigued)
+            self.player.handle_movement(keys, self.staminaBar.fatigued)
 
             self.gamecamera.correct_offsets(self.abs_origin_vect, self.player)
 
