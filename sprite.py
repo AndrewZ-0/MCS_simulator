@@ -40,6 +40,7 @@ class Player(Sprite):
         super().__init__(screen, colour, width, height, "player")
 
         self.speed = 3
+        self.sprint = False
         self.jittering = [1, 0]
     
     def moveLeft(self):
@@ -61,11 +62,13 @@ class Player(Sprite):
     def handle_movement(self, keys, fatigued):
         self.moved = False
 
-        if choices((True, False), self.jittering, k = 1)[0]:
+        if choices((True, False), self.jittering[0 : 2], k = 1)[0]:
             if keys[K_SPACE] and not fatigued:
                 self.speed = 8
+                self.sprint = True
             else:
                 self.speed = 3
+                self.sprint = False
 
 
             if keys[K_LEFT]:
@@ -78,6 +81,18 @@ class Player(Sprite):
                 self.moveDown()
         else:
             randMovementChoice = randint(0, 4)
+
+            maxJitterSpeed = self.jittering[2]
+            if maxJitterSpeed >= 3:
+                if fatigued or choices((True, False), (maxJitterSpeed, 2), k = 1)[0]:
+                    self.speed = 3
+                    self.sprint = False
+                else:
+                    self.speed = maxJitterSpeed
+                    self.sprint = True
+            else:
+                self.speed = maxJitterSpeed
+
 
             if randMovementChoice == 1:
                 self.moveLeft()

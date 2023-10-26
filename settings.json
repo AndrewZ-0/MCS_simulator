@@ -7,9 +7,13 @@
         "conversation fatigue": 1
     }, 
     "gui": {
-        "ticker": {
-            "sanity": 9, 
-            "stamina": 1
+        "sanity": {
+            "ticker": 99, 
+            "regen": 1
+        }, 
+        "stamina": {
+            "ticker": 1
         }
+
     }
 }

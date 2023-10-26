@@ -90,7 +90,7 @@ class SanityBar(dataBar):
         newValue = round(self.value + valueChange, 1)
 
         endFlag = False
-        if int(newValue) <= 0:
+        if newValue <= 0:
             self.value = 0
             endFlag = True
             print("gameEnd")
