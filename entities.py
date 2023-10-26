@@ -12,7 +12,14 @@ class Entity():
         self._abs_x = abs_x
         self._abs_y = abs_y
         self._location = location # which location, as in which room/field etc
+        self._loaded = False # we will load the rooms after everything is instantiated
         # GUI logic for instantiating sprite here since all entities have sprites
+
+    def load(self):
+        self._loaded = True
+
+    def unload(self):
+        self._loaded = False
 
     def getName(self):
         return self._name
@@ -147,9 +154,14 @@ class Human(Dynamic):
 
     def gainSanity(self,sanity):
         self._sanity += sanity
+        if self._sanity > 10:
+            self._sanity = 10
 
     def loseSanity(self,sanity):
         self._sanity -= sanity
+        if self._sanity < -10:
+            pass
+            # code to make them insane
 
     def meet(self,entity):
         self._moods[entity] = self.__defaultMood + random.randint(-settings["maximum displacement for default mood"],settings["maximum displacement for default mood"])

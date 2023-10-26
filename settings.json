@@ -8,7 +8,7 @@
     }, 
     "gui": {
         "ticker": {
-            "sanity": 999, 
+            "sanity": 50,
             "stamina": 1
         }
     }
