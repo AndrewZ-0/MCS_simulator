@@ -115,6 +115,46 @@ class GameEngine:
                 "width": 30, 
                 "height": 30, 
                 "damage": 80
+            }, 
+            "obj11": {
+                "colour": (0, 0, 0), 
+                "x": 350, 
+                "y": 800, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 80
+            }, 
+            "obj12": {
+                "colour": (0, 255, 255), 
+                "x": 30, 
+                "y": 400, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 2
+            }, 
+            "obj13": {
+                "colour": (0, 255, 255), 
+                "x": 80, 
+                "y": 400, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 2
+            }, 
+            "obj14": {
+                "colour": (0, 155, 100), 
+                "x": 130, 
+                "y": 400, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 1
+            }, 
+            "obj15": {
+                "colour": (0, 155, 100), 
+                "x": 180, 
+                "y": 400, 
+                "width": 30, 
+                "height": 30, 
+                "damage": 1
             }
         }
         self.mappedEntities = []
@@ -160,18 +200,26 @@ class GameEngine:
             else:
                 self.staminaBar.update(0.2)
                 self.staminaBar.regenTicker = 0
+    
+    def update_sanityBar(self):
+        valueChange = (self.damage_dealing / self.damage_dealing_tickLimit)
+
+        n_change = int(valueChange // 0.2)
+        trueValueChange = n_change * 0.2
+
+        self.damage_dealing -= trueValueChange
+
+        for _ in range(n_change):
+            self.sanityBar.update(-0.2)
+
+        self.damage_dealing_tickLimit -= 1
         
     def update_sanity(self):
         if self.damage_dealing_tickLimit == 0:
             self.damage_dealing_tickLimit = 10
 
         if self.damage_dealing_tickLimit < 10 and self.sanityBar.value > 0:
-            valueChange = (self.damage_dealing / self.damage_dealing_tickLimit)
-            self.damage_dealing -= valueChange
-
-            self.sanityBar.update(-valueChange)
-
-            self.damage_dealing_tickLimit -= 1
+            self.update_sanityBar()
 
         for entity in self.gamecamera.sprites():
             if entity.entityKey != "player" and self.player.rect.colliderect(entity.rect):
@@ -182,18 +230,13 @@ class GameEngine:
                     self.damage_dealing += self.enitities[entity.entityKey]["damage"]
                     #========================
 
-                    valueChange = (self.damage_dealing / self.damage_dealing_tickLimit)
-                    self.damage_dealing -= valueChange
-
-                    self.sanityBar.update(-valueChange)
-
-                    self.damage_dealing_tickLimit -= 1
+                    self.update_sanityBar()
         
         if self.sanityBar.value < self.sanityBar.maxvalue:
             if self.sanityBar.regenTicker < self.settingsLibrary["ticker"]["sanity"]:
                 self.sanityBar.regenTicker += 1
             else:
-                self.sanityBar.update(1)
+                self.sanityBar.update(0.2)
 
     def update_inventory(self, item):
         self.inventory.append(item)
