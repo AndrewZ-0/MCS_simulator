@@ -1,14 +1,18 @@
 {
     "virtual system": {
         "default mood max disp": 2,
+
         "min conversing mood": -5,
         "fluency proportion": 0.25,
         "approval pos/neg reaction disp": 1,
-        "conversation fatigue": 1
+        "conversation fatigue": 1,
+
+        "min update time": 3,
+        "random added time": 2
     }, 
     "gui": {
         "sanity": {
-            "ticker": 99, 
+            "ticker": 99,
             "regen": 1, 
             "jittering": {
                 "5": {
@@ -67,7 +71,7 @@
                     "jitterSpeed": 1
                 }
             }
-        }, 
+        },
         "stamina": {
             "ticker": 1
         }

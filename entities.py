@@ -1,9 +1,11 @@
 import container
 import random
 import json
+import time
 
 settings = json.load(open("settings.json","r"))
 lines = json.load(open("lines.json","r"))
+pause = False # this is a global variable used to pause all the entities
 
 #these are things that move around the rooms, like the player
 class Entity():
@@ -147,6 +149,7 @@ class Human(Dynamic):
     def __init__(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood):
         super().__init__(name,abs_x,abs_y,location,buffs)
         self._sanity = sanity
+        self._insane = False
         self._subjects = subjects
         self.__defaultMood = mood
         self._inventory = []
@@ -160,8 +163,7 @@ class Human(Dynamic):
     def loseSanity(self,sanity):
         self._sanity -= sanity
         if self._sanity < -10:
-            pass
-            # code to make them insane
+            self._insane = True
 
     def meet(self,entity):
         self._moods[entity] = self.__defaultMood + random.randint(-settings["maximum displacement for default mood"],settings["maximum displacement for default mood"])
@@ -179,6 +181,11 @@ class Human(Dynamic):
         if self._location.loaded():
             speach = random.choice(lines[speach])
             # GUI code for creating speach bubble
+
+    def beginLoop(self):
+        while not self._insane and self._loaded and not pause:
+            self.update()
+            time.sleep(settings["virtual system"]["min update time"]+settings["virtual system"]["random added time"]*random.random())
 
 class Student(Human):
     def __init__(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
@@ -230,6 +237,10 @@ class Student(Human):
             self.gainSanity(approval)
             student.gainSanity(approval)
 
+    def update(self):
+        pass
+
+
 class Player(Student):
     def __init__(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
         super().__init__(name, abs_x, abs_y, location, buffs, sanity, subjects, mood,humanities,sciences,otherPeople,popCulture,gaming,sports)
@@ -241,3 +252,6 @@ class Teacher(Human):
         self.__attack = attack
 
         self._type = "teacher"
+
+    def update(self):
+        pass
