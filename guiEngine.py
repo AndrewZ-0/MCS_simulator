@@ -217,30 +217,13 @@ class GameEngine:
     def update_jittering(self):
         sanityValue = int(self.sanityBar.value)
 
-        if sanityValue <= 5:
-            self.player.jittering = [1, 10, 15]
-        elif sanityValue <= 10:
-            self.player.jittering = [1, 8, 10]
-        elif sanityValue <= 15:
-            self.player.jittering = [1, 5, 9]
-        elif sanityValue <= 20:
-            self.player.jittering = [1, 3, 8]
-        elif sanityValue <= 25:
-            self.player.jittering = [1, 2, 7]
-        elif sanityValue <= 30:
-            self.player.jittering = [1, 1, 6]
-        elif sanityValue <= 35:
-            self.player.jittering = [3, 1, 5]
-        elif sanityValue <= 40:
-            self.player.jittering = [6, 1, 4]
-        elif sanityValue <= 50:
-            self.player.jittering = [10, 1, 3]
-        elif sanityValue <= 75:
-            self.player.jittering = [20, 1, 2]
-        elif sanityValue <= 90:
-            self.player.jittering = [30, 1, 1]
-        else:
-            self.player.jittering = [1, 0, 0]
+        jitterLibrary = self.settingsLibrary["sanity"]["jittering"]
+        for jitterThreshold in list(jitterLibrary.keys()):
+            if sanityValue <= int(jitterThreshold):
+                jitterRecord = jitterLibrary[jitterThreshold]
+
+                self.player.jittering = (jitterRecord["nonJitterProb"], jitterRecord["jitterProb"], jitterRecord["jitterSpeed"])
+                break
         
     def update_sanity(self):
         self.update_jittering()

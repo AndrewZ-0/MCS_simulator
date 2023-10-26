@@ -9,7 +9,64 @@
     "gui": {
         "sanity": {
             "ticker": 99, 
-            "regen": 1
+            "regen": 1, 
+            "jittering": {
+                "5": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 10, 
+                    "jitterSpeed": 15
+                }, 
+                "10": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 8, 
+                    "jitterSpeed": 10
+                }, 
+                "15": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 5, 
+                    "jitterSpeed": 9
+                }, 
+                "20": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 3, 
+                    "jitterSpeed": 8
+                }, 
+                "25": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 2, 
+                    "jitterSpeed": 7
+                }, 
+                "30": {
+                    "nonJitterProb": 1, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 6
+                }, 
+                "35": {
+                    "nonJitterProb": 3, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 5
+                }, 
+                "40": {
+                    "nonJitterProb": 6, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 4
+                }, 
+                "50": {
+                    "nonJitterProb": 10, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 3
+                }, 
+                "75": {
+                    "nonJitterProb": 20, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 2
+                }, 
+                "90": {
+                    "nonJitterProb": 30, 
+                    "jitterProb": 1, 
+                    "jitterSpeed": 1
+                }
+            }
         }, 
         "stamina": {
             "ticker": 1
