@@ -1,11 +1,8 @@
 import container
 import random
-import json
 import time
+import json
 
-settings = json.load(open("settings.json","r"))
-lines = json.load(open("lines.json","r"))
-pause = False # this is a global variable used to pause all the entities
 
 #these are things that move around the rooms, like the player
 class Entity():
@@ -255,3 +252,20 @@ class Teacher(Human):
 
     def update(self):
         pass
+
+class EntityHandler:
+    def __init__(self):
+        global settings
+        global lines
+        global pause
+        settings = json.load(open("settings.json", "r"))
+        lines = json.load(open("lines.json", "r"))
+        pause = False
+
+    def pauseEntities(self):
+        global pause
+        pause = True
+
+    def unpauseEntities(self):
+        global pause
+        pause = False

@@ -1,4 +1,3 @@
-loadedLocations = [] # may be subject to change
 
 class location:
     def __init__(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
