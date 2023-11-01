@@ -1,4 +1,4 @@
-import entities
+from entities import EntityHandler
 
 class virtualSystem:
     def __init__(self):
@@ -6,9 +6,7 @@ class virtualSystem:
         periodTypes = ["lesson"]
 
     def pause(self):
-        entities.pauseEntities()
+        EntityHandler.pauseEntities()
 
     def unpause(self):
-        entities.unpauseEntities()
-
-    def load(self,):
+        EntityHandler.unpauseEntities()
