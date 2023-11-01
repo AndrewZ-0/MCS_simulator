@@ -269,3 +269,6 @@ class EntityHandler:
     def unpauseEntities(self):
         global pause
         pause = False
+
+    def instantiateWall(self,name,abs_x,abs_y,location):
+        return Wall(name,abs_x,abs_y,location)
