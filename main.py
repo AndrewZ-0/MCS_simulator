@@ -1,4 +1,5 @@
 from VirtualSystem import virtualSystem
+from locations import LocationsHandler
 
-loadedLocations = [] # may be subject to change, contains locations that are currently loaded
+loadedLocations = LocationsHandler.getLoadedLocations()
 system = virtualSystem()

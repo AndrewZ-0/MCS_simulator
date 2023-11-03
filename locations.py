@@ -1,3 +1,4 @@
+loadedLocations = []
 
 class location:
     def __init__(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
@@ -37,3 +38,9 @@ class location:
     def leave(self,entity):
         self.entities[entity.getType()].remove(entity)
 
+class LocationsHandler:
+    def __init__(self):
+        pass
+
+    def getLoadedLocations(self):
+        return loadedLocations

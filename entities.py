@@ -63,10 +63,11 @@ class Interactable(Entity):
         self._actions = []
 
 class Door(Interactable):
-    def __init__(self,name,abs_x,abs_y,location, open, connects, motion):
-        super().__init__(name, abs_x, abs_y, location)
-        self.__open = open
+    def __init__(self,name,abs_x,abs_y,orientation,status, connects, motion):
+        super().__init__(name, abs_x, abs_y, None)
+        self.__status = status
         self.__connects = connects
+        self.__orientation = orientation
         self.__motion = motion
 
         self._type = "door"
@@ -272,3 +273,10 @@ class EntityHandler:
 
     def instantiateWall(self,name,abs_x,abs_y,location):
         return Wall(name,abs_x,abs_y,location)
+
+
+    def instantiateDoor(self,name, abs_x,abs_y,orientation,status,connects,motion):
+        return Door(name,abs_x,abs_y,orientation,status,connects,motion)
+
+    def instantiateInteractable(self):
+        return
