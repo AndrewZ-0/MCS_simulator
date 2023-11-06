@@ -1,4 +1,5 @@
 import container
+import locations
 import random
 import time
 import json
@@ -6,11 +7,11 @@ import json
 
 #these are things that move around the rooms, like the player
 class Entity():
-    def __init__(self,name,abs_x,abs_y,location):
-        self._name = name
+    def __init__(self,abs_x,abs_y,location):
         self._abs_x = abs_x
         self._abs_y = abs_y
-        self._location = location # which location, as in which room/field etc
+        self._location = location # which location, as in which room/field instance etc
+        self._location.enter(self) # puts itself in the room it spawned in
         self._loaded = False # we will load the rooms after everything is instantiated
         # GUI logic for instantiating sprite here since all entities have sprites
 
@@ -63,8 +64,8 @@ class Interactable(Entity):
         self._actions = []
 
 class Door(Interactable):
-    def __init__(self,name,abs_x,abs_y,orientation,status, connects, motion):
-        super().__init__(name, abs_x, abs_y, None)
+    def __init__(self,abs_x,abs_y,orientation,status, connects, motion):
+        super().__init__(abs_x, abs_y, None)
         self.__status = status
         self.__connects = connects
         self.__orientation = orientation
@@ -83,7 +84,8 @@ class Door(Interactable):
 
 class GivesBuffs(Interactable):
     def __init__(self,name,abs_x,abs_y,location,buffs):
-        super().__init__(name,abs_x,abs_y,location)
+        super().__init__(abs_x,abs_y,location)
+        self._name = name
         self.__buffs = buffs
 
     def getBuffs(self):
@@ -271,12 +273,18 @@ class EntityHandler:
         global pause
         pause = False
 
-    def instantiateWall(self,name,abs_x,abs_y,location):
-        return Wall(name,abs_x,abs_y,location)
+    def instantiateWall(self,abs_x,abs_y,location):
+        return Wall(abs_x,abs_y,location)
 
 
     def instantiateDoor(self,name, abs_x,abs_y,orientation,status,connects,motion):
         return Door(name,abs_x,abs_y,orientation,status,connects,motion)
 
-    def instantiateInteractable(self):
-        return
+    def instantiateFurniture(self,name,abs_x,abs_y,location,buffs):
+        return Furniture(name,abs_x,abs_y,location,buffs)
+
+    def instantiateStudent(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
+        return Student(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports)
+
+    def instantiateTeacher(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack):
+        return Teacher(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack)

@@ -17,3 +17,4 @@ class virtualSystem:
     def instantiateDoor(self,name,abs_x,abs_y,orientation,status,connects,motion):
         self.__entities["door"].append(EntityHandler.instantiateDoor(name,abs_x,abs_y,orientation,status,connects,motion))
 
+

@@ -1,4 +1,5 @@
 loadedLocations = []
+locations = []
 
 class location:
     def __init__(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
@@ -44,3 +45,6 @@ class LocationsHandler:
 
     def getLoadedLocations(self):
         return loadedLocations
+
+    def getLocations(self):
+        return locations
