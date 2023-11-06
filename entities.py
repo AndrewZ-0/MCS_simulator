@@ -182,6 +182,9 @@ class Human(Dynamic):
             speach = random.choice(lines[speach])
             # GUI code for creating speach bubble
 
+    def randomUnloadedMove(self):
+
+
     def beginLoop(self):
         while not self._insane and self._loaded and not pause:
             self.update()
