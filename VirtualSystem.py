@@ -22,9 +22,9 @@ class virtualSystem:
         self.__entityHandler.instantiateFurniture(name,abs_x,abs_y,location,buffs)
 
     def instantiateStudent(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports):
-        self.__entityHandler.instantiateStudent(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports)
+        self.__entities.append(self.__entityHandler.instantiateStudent(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,humanities,sciences,otherPeople,popCulture,gaming,sports))
 
     def instantiateTeacher(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack):
-        self.__entityHandler.instantiateTeacher(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack)
+        self.__entities.append(self.__entityHandler.instantiateTeacher(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack))
 
 
