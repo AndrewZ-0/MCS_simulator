@@ -21,9 +21,6 @@ class Entity():
     def unload(self):
         self._loaded = False
 
-    def getName(self):
-        return self._name
-
     def getabs_x(self):
         return self._abs_x
 
@@ -37,8 +34,8 @@ class Entity():
         return self._type
 
 class Wall(Entity):
-    def __init__(self,name,abs_x,abs_y,location):
-        super().__init__(name,abs_x,abs_y,location)
+    def __init__(self,abs_x,abs_y,location):
+        super().__init__(abs_x,abs_y,location)
         self._type = "wall"
 
 class Interactable(Entity):
@@ -46,6 +43,10 @@ class Interactable(Entity):
         super().__init__(name,abs_x,abs_y,location)
         self._actions = [] # each action is a tuple, the first element being a string (the description of the action), the second element being a tuple of functions to be performed, the third element a tuple of tuples, each of which are the parameters for the function. i.e ("action description",(print,action),(("action is performed",),(parameter1,parameter2,parameter3)))
         # GUI logic for instantiating nametag here since all interactables have name tags
+
+
+    def getName(self):
+        return self._name
 
     def getActions(self):
         return self._actions
@@ -64,8 +65,8 @@ class Interactable(Entity):
         self._actions = []
 
 class Door(Interactable):
-    def __init__(self,abs_x,abs_y,orientation,status, connects, motion):
-        super().__init__(abs_x, abs_y, None)
+    def __init__(self,name,abs_x,abs_y,orientation,status, connects, motion):
+        super().__init__(name,abs_x, abs_y, None)
         self.__status = status
         self.__connects = connects
         self.__orientation = orientation
