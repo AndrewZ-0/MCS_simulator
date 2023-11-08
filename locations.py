@@ -2,14 +2,14 @@ loadedLocations = []
 locations = []
 
 class location:
-    def __init__(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
+    def __init__(self,name,xwidth,ywidth,floor,xposition,yposition,connects):
         self._name = name
         self._xwidth = xwidth
         self._ywidth = ywidth
         self._floor = floor
         self._xposition = xposition
         self._yposition = yposition
-        self._exits = exits
+        self._connects = connects
 
         self.entities = {"wall":[], "door":[], "furniture":[], "item":[], "student":[], "teacher":[]}
 

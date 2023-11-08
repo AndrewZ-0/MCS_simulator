@@ -1,4 +1,6 @@
 from entities import EntityHandler
+import json
+
 
 class virtualSystem:
     def __init__(self):
@@ -27,4 +29,7 @@ class virtualSystem:
     def instantiateTeacher(self,name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack):
         self.__entities.append(self.__entityHandler.instantiateTeacher(name,abs_x,abs_y,location,buffs,sanity,subjects,mood,attack))
 
+    def instantiateLocation(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
+        connects = []
+        for
 
