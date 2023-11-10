@@ -39,6 +39,18 @@ class location:
     def leave(self,entity):
         self.entities[entity.getType()].remove(entity)
 
+    def getName(self):
+        return self._name
+
+    def finaliseLocation(self):
+        global locations
+
+        for i,name in enumerate(self._connects):
+            for pointer in locations:
+                if pointer.getName == name:
+                    self._connects[i] = pointer
+
+
 class LocationsHandler:
     def __init__(self):
         pass
@@ -48,3 +60,13 @@ class LocationsHandler:
 
     def getLocations(self):
         return locations
+
+    def addLocation(self,name,xwidth,ywidth,floor,xposition,yposition,connects):
+        global locations
+        locations.append(location(name,xwidth,ywidth,floor,xposition,yposition,connects))
+
+    def finaliseLocations(self):
+        global locations
+
+        for i in locations:
+            i.finaliseLocation()

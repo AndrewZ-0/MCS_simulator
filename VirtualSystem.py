@@ -1,4 +1,5 @@
 from entities import EntityHandler
+from locations import LocationsHandler
 import json
 
 
@@ -7,6 +8,7 @@ class virtualSystem:
         self.__entities = [] # global list of humans
         self.__periodTypes = ["lesson"]
         self.__entityHandler = EntityHandler()
+        self.__locationHandler = LocationsHandler()
 
     def pause(self):
         self.__entityHandler.pauseEntities()
@@ -31,5 +33,14 @@ class virtualSystem:
 
     def instantiateLocation(self,name,xwidth,ywidth,floor,xposition,yposition,exits):
         connects = []
-        for
+        with json.load(open("mcs_map.json"))["exits"] as exitTable:
+            for i in exits:
+                for j in exitTable[i]["connects"].keys():
+                    if j != name:
+                        connects.append(j)
+            self.__locationHandler.addLocation(name,xwidth,ywidth,floor,xposition,yposition,connects)
+
+
+    def finaliseLocations(self):
+        self.__locationHandler.finaliseLocations()
 
